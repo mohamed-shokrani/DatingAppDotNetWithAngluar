@@ -1,6 +1,7 @@
 using DatingApp.Data;
 using DatingApp.Extensions;
 using DatingApp.Interfaces;
+using DatingApp.Middleware;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -33,12 +34,14 @@ builder.Services.AddDbContext<DataContext>(Options => Options.UseSqlServer("Serv
 //builder.Services.AddDbContext();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+    app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(x => x.AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
