@@ -1,4 +1,5 @@
-﻿using DatingApp.Interfaces;
+﻿using DatingApp.Data;
+using DatingApp.Interfaces;
 using DatingApp.Services;
 
 namespace DatingApp.Extensions
@@ -8,6 +9,7 @@ namespace DatingApp.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITokenServices, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

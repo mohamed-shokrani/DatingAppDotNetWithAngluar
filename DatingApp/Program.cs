@@ -1,5 +1,6 @@
 using DatingApp.Data;
 using DatingApp.Extensions;
+using DatingApp.Helper;
 using DatingApp.Interfaces;
 using DatingApp.Middleware;
 using DatingApp.Services;
@@ -25,6 +26,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(AutoMpperProfiles).Assembly);
 builder.Services.AddDbContext<DataContext>(Options => Options.UseSqlServer("Server=.;Database=DatingAppSQL;Trusted_Connection=True"));
 //builder.Services.AddDbContext<DataContext>(options =>
 //{
@@ -55,3 +57,20 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+using var scope = app.Services.CreateScope();// creating scope for the services that we are gonna create in this part
+var services = scope.ServiceProvider; 
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+
+}
+catch (Exception ex)
+{
+    var logger= services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An Error ocurred during migration ");
+}
+
+
+
