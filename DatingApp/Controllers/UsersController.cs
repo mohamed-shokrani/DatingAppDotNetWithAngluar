@@ -29,7 +29,7 @@ namespace DatingApp.Controllers
          // IEnu,erable allows us to use simple iteration of a collection 
          public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var  users =await _userRepository.GetAppUsersAsync();
+            var  users =await _userRepository.GetMembersAsync();
            var usertoReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
             if (users is null)
             {
@@ -42,7 +42,7 @@ namespace DatingApp.Controllers
         [HttpGet("{username}")]
         public async Task< ActionResult<MemberDto>> GetUser(string username)
         {
-            var user =await _userRepository.GetUserByNameAsync(username); 
+            var user =await _userRepository.GetMemberAsync(username); 
             
             if (user is null)
             {

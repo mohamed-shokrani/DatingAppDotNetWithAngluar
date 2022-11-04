@@ -6,7 +6,7 @@
         // public string? Password { get; set; }
         public int Id { get; set; }
        
-        //public string ImageUrl { get; set; }
+        public string PhotoUrl { get; set; }
         public string Age { get; set; }
         public string KnownAs { get; set; }
         public DateTime Created { get; set; } 
