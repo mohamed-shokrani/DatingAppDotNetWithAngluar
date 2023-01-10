@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DatingApp.Controllers
 {
@@ -91,6 +92,18 @@ namespace DatingApp.Controllers
 
             //}
             return Ok(user);
+        }
+        [HttpPut]
+        public async Task< ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByNameAsync(username);
+            _mapper.Map(memberUpdateDto, user);   
+            _userRepository.UpadateUser(user);  
+            if(await _userRepository.SaveAllAsync()) return NoContent();
+            return BadRequest("Failed to update user");
+            
+           
         }
 
     }

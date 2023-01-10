@@ -6,8 +6,13 @@
         {
             var today = DateTime.Today;
             var age = today.Year - today.Month;
-            if (dob.Date > today.AddYears(age)) age--;
-            return age;
+            while(dob.Date < today.AddYears(age))
+            {
+                age--;
+            }
+            //if () age--
+            var real_age = Math.Abs(age);
+            return real_age;
 
 
 
