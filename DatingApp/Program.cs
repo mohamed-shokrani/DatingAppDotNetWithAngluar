@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using DatingApp.Data;
 using DatingApp.Extensions;
 using DatingApp.Helper;
@@ -17,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ** How to add Database in Dot net 6 **
 //var connectionString = builder.Configuration.GetConnectionString("AppDb");
 //builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString));
+builder.Services.cloudinary.Api.SignParameters(IDictionary<string, object> parameters);
 
 // Add services to the container.
 builder.Services.AddCors();
