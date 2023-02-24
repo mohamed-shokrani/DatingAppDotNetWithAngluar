@@ -1,10 +1,15 @@
 ﻿using DatingApp.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.Entity
 {
     public class AppUser
     {
         public string UserName { get; set; }
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[EmailAddress]
+        //public string Email { get; set; }
        // public string? Password { get; set; }
         public int Id { get; set; }
         public byte[] HashPassword { get; set; }
@@ -27,17 +32,6 @@ namespace DatingApp.Entity
         //    return DateOfBirth.CalculateAge();
 
         //}
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

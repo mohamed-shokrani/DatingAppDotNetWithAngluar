@@ -11,15 +11,22 @@ using Microsoft.IdentityModel.Tokens;
 using ServiceStack.Text;
 using System.Configuration;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 //private readonly IConfiguration _config;
 var builder = WebApplication.CreateBuilder(args);
-
+JsonSerializerOptions options = new()
+{
+    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+    WriteIndented = true
+};
 // ** How to add Database in Dot net 6 **
 //var connectionString = builder.Configuration.GetConnectionString("AppDb");
 //builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString));
-builder.Services.cloudinary.Api.SignParameters(IDictionary<string, object> parameters);
-
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Add services to the container.
 builder.Services.AddCors();
 builder.Services.AddControllers();
