@@ -26,7 +26,7 @@ namespace DatingApp.Services
             var TokenDescrobtor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(Claims),
-                Expires = DateTime.UtcNow.AddDays(3),
+                Expires = DateTime.UtcNow.AddDays(20),
                 SigningCredentials = creds
             };
             var tokenHandler = new JwtSecurityTokenHandler();

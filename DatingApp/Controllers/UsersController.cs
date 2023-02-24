@@ -159,7 +159,7 @@ namespace DatingApp.Controllers
 
             if (photo.IsMain) return BadRequest("This is already your main photo");
             var currenMain = user.Photos.FirstOrDefault(x => x.IsMain);
-            if (currenMain is not null )currenMain.IsMain = false;
+            if (currenMain is not null ) currenMain.IsMain = false;
             photo.IsMain = true;
             if(await _userRepository.SaveAllAsync())  return NoContent();
 
