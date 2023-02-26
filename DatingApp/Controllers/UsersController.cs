@@ -168,6 +168,26 @@ namespace DatingApp.Controllers
         
 
         }
+        [HttpDelete("delete-photo/{photoId}")]
+        public async Task<IActionResult> DeletePhoto(int photoId)
+        {
+            var user = await _userRepository.GetUserByNameAsync(User.GetuserName());
+            var photo = user.Photos.FirstOrDefault(x=>x.Id == photoId);
+            if (photo is null) return NotFound();
+            if (photo.IsMain) return BadRequest("You can not remove your Main Photo");
+            if(photo.PublicId is not null)
+            {
+                var Result =await _photoServices.DeletionPhotoAsync(photo.PublicId);
+                if (Result.Error is not null) return BadRequest(Result.Error.Message);
+            }
+            user.Photos.Remove(photo); //Remove photo from Database 
+            if(await _userRepository?.SaveAllAsync()) return Ok();
+            return BadRequest("Failed to delete your photo");
+
+
+
+
+        }
     }
    
   
