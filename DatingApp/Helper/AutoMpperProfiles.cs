@@ -16,6 +16,8 @@ namespace DatingApp.Helper
                 .ForMember(dest=>dest.Age,opt=>opt.MapFrom(src=>src.DateOfBirth.CalculateAge())); //for member means which member we want to effect;
             CreateMap<Photo, PhotoDto>();
             CreateMap<MemberUpdateDto,AppUser>();
+            CreateMap<RegisterDTO, AppUser>();
+
 
         }
     }

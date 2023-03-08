@@ -4,6 +4,7 @@ using DatingApp.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DatingApp.Helper;
 
 namespace DatingApp.Data
 {
@@ -32,13 +33,14 @@ namespace DatingApp.Data
                  .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _dataContext.Users
+            var query = _dataContext.Users
                             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)//when we use projection we do not need to use include 
-                            //because entity framework is gonna work out correct query to join the table and get what need from the table 
-                            .ToListAsync(); //
-                           
+                             .AsNoTracking();
+            //because entity framework is gonna work out correct query to join the table and get what need from the table 
+            return await PageList<MemberDto>.CreateAsync(query, userParams.PageNumber,userParams.PageSize );
+
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -56,7 +58,8 @@ namespace DatingApp.Data
 
         public async Task<bool> SaveAllAsync()
         {
-           return await _dataContext.SaveChangesAsync() > 0;
+           return await _dataContext.SaveChangesAsync() > 0;//Becasue save changes async returns an integer from this particular method 
+            //for the number of changes that have been changed in the database 
         }
 
         public void UpadateUser(AppUser appUser)

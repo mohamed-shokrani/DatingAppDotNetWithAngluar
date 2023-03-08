@@ -36,15 +36,20 @@ namespace DatingApp.Controllers
         [HttpGet]
         //public IActionResult then we specify the type of thing that we gonna return inside this result  <> 
         // IEnu,erable allows us to use simple iteration of a collection 
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync();
-            var usertoReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-            if (users is null)
-            {
-                return Ok(" no users can be find");
-            }
-            return Ok(usertoReturn);
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            //get access to our response
+            Response.AddPaginationHeader(users.CurrentPage,users.PageSize, users.TotatCount,
+                users.TotalPage);
+            //var usertoReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+            return Ok(users);
+            //if (users is null)
+            //{
+            //    return Ok(" no users can be find");
+            //}
+            //return Ok(usertoReturn);
 
 
         }
@@ -55,7 +60,7 @@ namespace DatingApp.Controllers
 
             if (user is null)
             {
-                return Ok(" no users can be find");
+                return Ok(" no users can be found");
             }
             return _mapper.Map<MemberDto>(user);
 

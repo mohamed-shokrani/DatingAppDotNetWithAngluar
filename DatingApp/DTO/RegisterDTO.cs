@@ -11,5 +11,22 @@ namespace DatingApp.DTO
 
         public string Password { get; set; } = string.Empty;
 
+        [Required]
+        public string Gender { get; set; }
+
+        public string City { get; set; }
+        [Required]
+
+        public string Country { get; set; }
+        [Required]
+
+        public DateTime DateOfBirth { get; set; }
+        
+
+      
+        [Required]
+
+        public string KnownAs { get; set; }
+
     }
 }
