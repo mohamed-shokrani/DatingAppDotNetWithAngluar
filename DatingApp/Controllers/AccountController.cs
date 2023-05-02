@@ -5,6 +5,7 @@ using DatingApp.Entity;
 using DatingApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Text;
@@ -44,9 +45,10 @@ namespace DatingApp.Controllers
            await _dc.SaveChangesAsync();
             return new UserDTO
             {
-                UserName = RegisterDto.UserName,
+                UserName = user.UserName,
                 Token = _tokenServices.GetToken(user),
-                KnownAs=RegisterDto.KnownAs,
+                KnownAs= user.KnownAs,
+                Gender = user.Gender,
 
             };
 
@@ -75,16 +77,18 @@ namespace DatingApp.Controllers
             }
             return new UserDTO
             {
-                UserName = loginDTO.UserName,
+                UserName = user.UserName,
                 Token = _tokenServices.GetToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-                KnownAs =user.KnownAs
+                KnownAs =user.KnownAs,
+                Gender = user.Gender,
+
             };
         }
         private async Task<bool> UserExists(string username)
         {
             return await _dc.Users.AnyAsync(d => d.UserName == username.ToLower());
-    }
+                                 }
     }
   
 }

@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace DatingApp.Extensions
 {
+    //adding extension method allows add a pgination header to our http reponse 
     public static class HttpExtensions
     {
         public static void AddPaginationHeader(this HttpResponse response,int currentPage,int itemsPerPage,
