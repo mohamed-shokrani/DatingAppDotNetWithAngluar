@@ -32,23 +32,13 @@ namespace DatingApp.Data
                  .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                  .SingleOrDefaultAsync();
         }
-
-        //public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
-        //{
-        //    var query = _dataContext.Users.OrderBy(x=>x.UserName)
-        //                    .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)//when we use projection we do not need to use include 
-        //                     .AsNoTracking();
-        //    //because entity framework is gonna work out correct query to join the table and get what need from the table 
-        //    return await PageList<MemberDto>.CreateAsync(query, userParams.PageNumber,userParams.PageSize );
-
-        //}
          
         public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
             var query = _dataContext.Users.AsQueryable();
             query = query.Where(u => u.UserName != userParams.CurrentUserName);
             query = query.Where(u=>u.Gender == userParams.Gender);
-
+           
             var MaxDOB = DateTime.Today.AddYears(-userParams.MaxAge - 1);
             var MinDOB = DateTime.Today.AddYears(-userParams.MinAge);
 

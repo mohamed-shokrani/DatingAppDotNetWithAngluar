@@ -120,7 +120,7 @@ namespace DatingApp.Controllers
         //[JsonIgnore]
 
         [HttpPost("add-photo")]
-        public async Task<ActionResult<PhotoDto>> addPhoto(IFormFile File)//allow user to add file 
+        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile File)//allow user to add file 
         {
 
 
