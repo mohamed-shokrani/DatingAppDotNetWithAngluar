@@ -25,6 +25,8 @@ namespace DatingApp.Entity
         public ICollection<UserLike> LikedByUsers { get; set; }// this the list of users that like the currently loged in user 
         public ICollection<UserLike> LikedUsers { get; set; } // this the list of users that the currently loged in  user has liked  
 
+        public ICollection<Message>  MessagesSent { get; set; }// this the list of users that like the currently loged in user 
+        public ICollection<Message> MessagesReceived { get; set; } // this the list of users that the currently loged in  user has liked  
 
 
     }

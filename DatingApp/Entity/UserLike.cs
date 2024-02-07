@@ -8,6 +8,8 @@
         public int LikedUserId { get; set; }
 
         public AppUser LikedUser { get; set; }// the other side 
+
+
         
 
     }
